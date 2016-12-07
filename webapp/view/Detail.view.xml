@@ -1,0 +1,91 @@
+<mvc:View controllerName="com.bcone.hackathon.controller.Detail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:viz="sap.viz.ui5.controls"
+xmlns:viz.data="sap.viz.ui5.data" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:semantic="sap.m.semantic">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" title="Kanban Status"
+		busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<ObjectHeader id="objectHeader" title="Kanban : {DESCRIPTION} ">
+				<attributes>
+					<ObjectAttribute text="Kanban ID : {KANBAN_ID}"/>
+				</attributes>
+			</ObjectHeader>
+			<IconTabBar id="iconTabBar" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter id="iconTabBarFilter1" icon="sap-icon://basket" tooltip="Kanban status" text="Kanban">
+						<content>
+							<viz:VizFrame id="vizframe">
+								<viz:dataset>
+									<viz.data:FlattenedDataset data="{/results1}">
+										<viz.data:dimensions>
+											<viz.data:DimensionDefinition axis="1" name="CURR_KANBAN_ID" value="{CURR_KANBAN_ID}"/>
+										</viz.data:dimensions>
+										<viz.data:measures>
+											<viz.data:MeasureDefinition name="Quantity" value="{Quantity}"/>
+										</viz.data:measures>
+									</viz.data:FlattenedDataset>
+								</viz:dataset>
+								<viz:feeds>
+									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Quantity"/>
+									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="CURR_KANBAN_ID"/>
+								</viz:feeds>
+							</viz:VizFrame>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="iconTabBarFilter2" icon="sap-icon://functional-location" tooltip="Kanban current location" text="Location">
+						<content>
+							<Image src="img/Map1.png" densityAware="false"/>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="iconTabBarFilter3" icon="sap-icon://detail-view" tooltip="Kanban report" text="Report">
+						<content>
+							<Table id="idKanbanTable" updateFinished="onUpdateFinished" inset="false" items="{ path: '/results', sorter: { path: 'CURR_KANBAN_ID' } }">
+								<headerToolbar>
+									<Toolbar>
+										<Title text="Products" level="H2"/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column>
+										<Text text="Work Station"/>
+									</Column>
+									<Column>
+										<Text text="Work Station Desc"/>
+									</Column>
+									<Column>
+										<Text text="Current Kabnab ID"/>
+									</Column>
+									<Column>
+										<Text text="Status"/>
+									</Column>
+									<Column>
+										<Text text="Rep. Kabnab ID"/>
+									</Column>
+									<Column>
+										<Text text="Status"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text text="{WORKSTAT}"/>
+											<Text text="{DESCRIPTION}"/>
+											<Text text="{CURR_KANBAN_ID}"/>
+											<Text text="{STATUS}"/>
+											<Text text="{REP_KANBAN_ID}"/>
+											<Text text="{REP_KANBAN_STATUS}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:content>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+				<semantic:mainAction>
+			<semantic:MainAction id="main" press="onOverviewPress" text="Overview"/>
+		</semantic:mainAction>
+	</semantic:DetailPage>
+</mvc:View>

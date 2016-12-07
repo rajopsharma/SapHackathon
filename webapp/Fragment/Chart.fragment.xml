@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns:m="sap.m" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:t="sap.ui.table" xmlns="sap.ui.commons" xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout">
+
+	<m:Dialog stretch="false" showHeader="true" >
+							<viz:VizFrame uiConfig="{applicationSet:'fiori'}">
+								<viz:dataset>
+									<viz.data:FlattenedDataset data="{/results1}">
+										<viz.data:dimensions>
+											<viz.data:DimensionDefinition axis="1" name="CURR_KANBAN_ID" value="{CURR_KANBAN_ID}"/>
+										</viz.data:dimensions>
+										<viz.data:measures>
+											<viz.data:MeasureDefinition name="Quantity" value="{Quantity}"/>
+										</viz.data:measures>
+									</viz.data:FlattenedDataset>
+								</viz:dataset>
+								<viz:feeds>
+									<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Quantity"/>
+									<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="CURR_KANBAN_ID"/>
+								</viz:feeds>
+							</viz:VizFrame>
+	</m:Dialog>
+
+</core:FragmentDefinition>
